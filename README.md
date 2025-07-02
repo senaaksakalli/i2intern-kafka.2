@@ -1,5 +1,5 @@
 # i2intern-kafka.2
-# Java Producer-Consumer Example
+# Java Producer-Consumer 
 
 Bu proje, **i2i Systems** staj programı kapsamında,  nesne yayınlama ve okuma işlemlerini gerçekleştiren iki Java programından oluşmaktadır. Producer programı, `Student` sınıfını kullanarak Java nesnelerini üretir ve bu nesneleri Consumer programına gönderir. Consumer ise bu nesneleri alır ve konsola yazdırır.
 
