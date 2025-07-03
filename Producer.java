@@ -10,24 +10,24 @@ import java.util.Properties;
 public class Producer {
 
     public static void main(String[] args) {
-        // Kafka ayarları
+    
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         properties.put("key.serializer", StringSerializer.class.getName());
         properties.put("value.serializer", StringSerializer.class.getName());
 
-        // Kafka producer oluştur
+        
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
         try {
             String topic = "test-topic";
 
-            // Örnek öğrenciler
+        
             Student s1 = new Student(1, "Sena");
             Student s2 = new Student(2, "Miray");
             Student s3 = new Student(3, "Efe");
 
-            // Öğrencileri JSON formatında Kafka’ya gönder
+            
             producer.send(new ProducerRecord<>(topic, "1", s1.toJson()));
             producer.send(new ProducerRecord<>(topic, "2", s2.toJson()));
             producer.send(new ProducerRecord<>(topic, "3", s3.toJson()));
