@@ -1,6 +1,6 @@
 package org.example;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -11,6 +11,7 @@ import java.util.Properties;
 public class Consumer {
 
     public static void main(String[] args) {
+
         // Kafka ayarları
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
@@ -24,12 +25,17 @@ public class Consumer {
             consumer.subscribe(Collections.singletonList("test-topic"));
 
             while (true) {
-                var records = consumer.poll(Duration.ofSeconds(2));
+                var records = consumer.poll(Duration.ofSeconds(2));  // Mesajları al
                 for (var record : records) {
                     try {
-                        Student student = Student.fromJson(record.value());
+
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        Student student = objectMapper.readValue(record.value(), Student.class);
+
+
                         System.out.println("Alındı: " + student);
-                    } catch (JsonProcessingException e) {
+
+                    } catch (Exception e) {
                         System.err.println("JSON çözümleme hatası: " + record.value());
                     }
                 }
@@ -37,8 +43,7 @@ public class Consumer {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            consumer.close();
+            consumer.close(); // Kafka consumer'ını kapat
         }
     }
 }
-
