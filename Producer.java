@@ -10,36 +10,32 @@ import java.util.Properties;
 public class Producer {
 
     public static void main(String[] args) {
+        // Kafka ayarları
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         properties.put("key.serializer", StringSerializer.class.getName());
         properties.put("value.serializer", StringSerializer.class.getName());
 
+        // Kafka producer oluştur
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 
         try {
             String topic = "test-topic";
 
-            for (int i = 1; i <= 10000; i++) {
-                Student student = new Student(i, "Student " + i);
-                String value = student.toJson();
-                String key = String.valueOf(i);
+            // Örnek öğrenciler
+            Student s1 = new Student(1, "Sena");
+            Student s2 = new Student(2, "Miray");
+            Student s3 = new Student(3, "Efe");
 
-                ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, value);
-                producer.send(record);
+            // Öğrencileri JSON formatında Kafka’ya gönder
+            producer.send(new ProducerRecord<>(topic, "1", s1.toJson()));
+            producer.send(new ProducerRecord<>(topic, "2", s2.toJson()));
+            producer.send(new ProducerRecord<>(topic, "3", s3.toJson()));
 
-                if (i % 1000 == 0) {
-                    System.out.println("Sent " + i + " students...");
-                }
-            }
-
-            producer.flush();
-            System.out.println("Finished sending 10,000 students.");
+            System.out.println("Öğrenciler Kafka’ya gönderildi.");
 
         } catch (JsonProcessingException e) {
-            System.err.println("JSON serialization error: " + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("JSON dönüştürme hatası: " + e.getMessage());
         } finally {
             producer.close();
         }
