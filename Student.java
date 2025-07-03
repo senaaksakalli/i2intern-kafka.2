@@ -4,11 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Student {
-    public int id;
-    public String name;
+    private int id;
+    private String name;
+
 
     public Student() {
-        // JSON deserialization işlemi için boş constructor
+
     }
 
     public Student(int id, String name) {
@@ -16,13 +17,30 @@ public class Student {
         this.name = name;
     }
 
-    // Student nesnesini JSON string'e dönüştür
+    // Getter ve Setter
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
     public String toJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
     }
 
-    // JSON string'inden Student nesnesi oluştur
+
     public static Student fromJson(String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Student.class);
@@ -30,6 +48,7 @@ public class Student {
 
     @Override
     public String toString() {
+
         return "Student{id=" + id + ", name='" + name + "'}";
     }
 }
