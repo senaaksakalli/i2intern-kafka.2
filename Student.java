@@ -1,4 +1,3 @@
-
 package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +8,7 @@ public class Student {
     public String name;
 
     public Student() {
-        // JSON deserialization için boş constructor
+        // JSON deserialization işlemi için boş constructor
     }
 
     public Student(int id, String name) {
@@ -17,11 +16,13 @@ public class Student {
         this.name = name;
     }
 
+    // Student nesnesini JSON string'e dönüştür
     public String toJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
     }
 
+    // JSON string'inden Student nesnesi oluştur
     public static Student fromJson(String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Student.class);
@@ -32,6 +33,3 @@ public class Student {
         return "Student{id=" + id + ", name='" + name + "'}";
     }
 }
-
-}
-
