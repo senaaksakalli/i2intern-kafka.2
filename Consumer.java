@@ -1,4 +1,3 @@
-
 package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,7 +10,8 @@ import java.util.Properties;
 
 public class Consumer {
 
-    public static <JsonProcessingException> void main(String[] args) {
+    public static void main(String[] args) {
+        // Kafka ayarları
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         properties.put("group.id", "test-group");
@@ -30,7 +30,7 @@ public class Consumer {
                         Student student = Student.fromJson(record.value());
                         System.out.println("Alındı: " + student);
                     } catch (JsonProcessingException e) {
-                        System.out.println("JSON çözümleme hatası: " + record.value());
+                        System.err.println("JSON çözümleme hatası: " + record.value());
                     }
                 }
             }
@@ -41,3 +41,4 @@ public class Consumer {
         }
     }
 }
+
